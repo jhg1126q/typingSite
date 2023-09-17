@@ -1,0 +1,35 @@
+.TypingMain {
+    text-align: center;
+    padding: 20px;
+}
+
+.TypingMain input{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 500px;
+    padding: 10px;
+}
+
+.TypingMain .msgContent{
+    text-align: center;
+}
+
+.TypingMain .msgContent .inputtxt{
+    width: 550px;
+}
+
+.TypingMain p{
+    padding: 10px;
+}
+
+.TypingMain .msgContent .msglist{
+    width: 500px;
+}
+
+
+
+.TypingMain button{
+    width: 200px;
+    padding: 10px;
+    cursor: pointer;
+}
