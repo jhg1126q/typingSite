@@ -4,55 +4,82 @@ import "./main.css";
 const TypingMain = () => {
 
     const [state, setState] = useState({
-        typeConstentMsg : "",
-        typeResultMsg : "타이핑 테스트 목록",
-        typeSpeed : 0,
-        typeAccuracy : 0
+        typeContentMsg : ""
     });
+    // state 하나로 관리하기가 안됨
+    const [typeAccuracy, setTypeAccuracy] = useState(0);
+    const [typeSpeed, setTypeSpeed] = useState(0);
+    const typeResultMsg = "타이핑 테스트 목록";
 
     const handleChangeState = (e) => {
+
+        let contents = e.target.value;
         
-        if(e.target.name === "typeConstentMsg") {
-            if(state.typeResultMsg.length >= state.typeConstentMsg.length) {
-                if(state.typeResultMsg === e.target.value){
-                    console.log(state.typeConstentMsg);
-                    console.log("성공");
+        if(e.target.name === "typeContentMsg") {
+            
+            if(typeResultMsg.length <= e.target.value.length) {
+                if(typeResultMsg === e.target.value){
+                    setTypeSpeed(10);
+                    setTypeAccuracy(100);
+                    contents = setTypingClear();
+                } else {
+                    // 작성중인 상태 일수 도 있다.
+                    // 해당 판별 여부를 위해 정확도를 측정하지 않아야합니다
+                    console.log("실패 ");
+                    setTypeSpeed(10);
+                    setTypeAccuracy(0);
                 }
+            } else if(typeResultMsg.length <= e.target.value.length) {
+                // 작성 완료인 상태 
+                // 텍스트 잘라서 비교해야한다
             } else {
-                console.log("실패");
+                console.log("작성중");
             }
         }
 
         setState({
             ...state,
-            [e.target.name] : e.target.value
+            [e.target.name] : contents
         });
     };
 
     const handlePageMove = () => {
         console.log("추가하러가기");
     };
+
+    const handleKeyDown = (e) => {
+        if(e.keyCode === 13) {
+            console.log("Enter");
+        } else if(e.keyCode === 32){
+            console.log("Space");
+        };
+    };
+
+    const setTypingClear = () => {
+        return "";
+    };
     
-    
+    // 타이핑 성공시 텍스트 인풋 초기화 해야한다
 
     return (
     <div className="TypingMain">
         <h2>사이트 메인화면</h2>
         <div>
-            <p>{state.typeResultMsg}</p>
+            <p>{typeResultMsg}</p>
         </div>
         <div>
             <input 
-                name="typeConstentMsg" 
-                value={state.typeContentMsg} 
-                onChange={handleChangeState}>
+                name="typeContentMsg" 
+                value={state.typeContentMsg}
+                onChange={handleChangeState}
+                onKeyDown={handleKeyDown}>
             </input>
         </div>
         <div>
-            <p className="infotxt">속도 : {state.typeSpeed} / min</p>
+            <p className="infotxt">속도 : {typeSpeed} / min</p>
         </div>
         <div>
-            <p className="infotxt">정확도 : {state.typeAccuracy} %</p>
+            <p className="infotxt">정확도 : {typeAccuracy} %</p>
         </div>
         <div>
             <button onClick={handlePageMove}>Add / Delete</button>
