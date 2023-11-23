@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./main.css";
+import axios from "axios";
 
 const TypingMain = () => {
   // 변수
@@ -10,6 +11,8 @@ const TypingMain = () => {
   const [typeAccuracy, setTypeAccuracy] = useState(0);
   const [typeSpeed, setTypeSpeed] = useState(0);
   const typeResultMsg = "타이핑 테스트 목록";
+
+  const [testData, setTestData] = useState([{}]);
 
   /*********************************************
         title : handleChangeState
@@ -62,6 +65,13 @@ const TypingMain = () => {
     **********************************************/
   const handlePageMove = () => {
     console.log("페이지 이동 ::: 추가 삭제");
+
+    fetch("https://jsonplaceholder.typicode.com/posts/1/comments")
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        setTestData(json);
+      });
   };
 
   /*********************************************
@@ -101,6 +111,13 @@ const TypingMain = () => {
       </div>
       <div>
         <button onClick={handlePageMove}>Add / Delete</button>
+      </div>
+      <div>
+        {testData.map((tgt) => (
+          <>
+            <br /> {tgt.id}
+          </>
+        ))}
       </div>
     </div>
   );
